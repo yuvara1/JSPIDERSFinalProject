@@ -11,7 +11,9 @@ import java.util.Optional;
 
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
-    Optional<Restaurant> findByRestaurantNameIgnoreCase(String restaurantName);
+    List<Restaurant> findByRestaurantNameContainingIgnoreCase(String restaurantName);
+
+
     List<Restaurant> findByLocationContainingIgnoreCase(String location);
     Page<Restaurant> findAll(Pageable pageable);
 }

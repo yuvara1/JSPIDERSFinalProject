@@ -4,6 +4,7 @@ import com.food.dto.request.OrderRequest;
 import com.food.dto.request.UpdateOrderStatusRequest;
 import com.food.dto.response.ApiResponse;
 import com.food.dto.response.OrderResponse;
+import com.food.entity.Order;
 import com.food.enums.OrderStatus;
 import com.food.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -54,11 +55,20 @@ public class OrderController {
         return ResponseEntity.ok(ApiResponse.success(orderService.getOrdersByRestaurant(restaurantId), "Orders retrieved successfully"));
     }
 
-    @GetMapping("/status/{status}")
-    @Operation(summary = "Filter by status", description = "Get orders with specified status")
-    public ResponseEntity<ApiResponse<List<OrderResponse>>> getOrdersByStatus(@PathVariable OrderStatus status) {
-        return ResponseEntity.ok(ApiResponse.success(orderService.getOrdersByStatus(status), "Orders retrieved successfully"));
+    @GetMapping("/api/v1/orders")
+    public List<OrderResponse> getOrders(@RequestParam(value = "status", required = false) OrderStatus status) {
+        if (status != null) {
+            List<OrderResponse> orders = orderService.getOrdersByStatus(status);
+            orders.forEach(order -> {
+                System.out.println(order.toString());
+            });
+            return orders;
+
+        } else {
+            return orderService.getAllOrders();
+        }
     }
+
 
     @GetMapping("/date/{date:\\d{4}-\\d{2}-\\d{2}}")
     @Operation(summary = "Filter by date", description = "Get orders placed on a specific date")

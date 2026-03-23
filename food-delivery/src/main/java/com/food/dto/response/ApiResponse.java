@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-/**
- * Standard API Response Wrapper for all endpoints
- * Provides consistent response format across the application
- */
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -25,9 +22,7 @@ public class ApiResponse<T> {
     private ApiError error;
     private LocalDateTime timestamp;
     
-    /**
-     * Success response with data
-     */
+
     public static <T> ApiResponse<T> success(T data, String message) {
         return ApiResponse.<T>builder()
                 .success(true)
@@ -37,9 +32,7 @@ public class ApiResponse<T> {
                 .build();
     }
     
-    /**
-     * Success response without data
-     */
+
     public static <T> ApiResponse<T> success(String message) {
         return ApiResponse.<T>builder()
                 .success(true)
@@ -48,9 +41,7 @@ public class ApiResponse<T> {
                 .build();
     }
     
-    /**
-     * Error response
-     */
+
     public static <T> ApiResponse<T> error(String message, String errorCode) {
         return ApiResponse.<T>builder()
                 .success(false)
@@ -63,9 +54,7 @@ public class ApiResponse<T> {
                 .build();
     }
     
-    /**
-     * Error response with details
-     */
+
     public static <T> ApiResponse<T> error(String message, String errorCode, Object details) {
         return ApiResponse.<T>builder()
                 .success(false)

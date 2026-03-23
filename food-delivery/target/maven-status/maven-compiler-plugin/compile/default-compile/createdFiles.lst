@@ -26,6 +26,7 @@ com\food\entity\Restaurant$RestaurantBuilder.class
 com\food\security\jwt\JwtUtils.class
 com\food\repository\PaymentRepository.class
 com\food\dto\response\OrderResponse$OrderResponseBuilder.class
+com\food\security\service\TokenBlackListService.class
 com\food\entity\Restaurant.class
 com\food\entity\Payment.class
 com\food\dto\request\LoginRequest.class

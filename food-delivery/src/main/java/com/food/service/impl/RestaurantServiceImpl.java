@@ -72,16 +72,6 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public RestaurantResponse getRestaurantByName(String name) {
-        Restaurant restaurant = restaurantRepository.findByRestaurantNameIgnoreCase(name)
-                .orElseThrow(() -> {
-                    log.error("Restaurant not found with name: {}", name);
-                    return new ResourceNotFoundException("Restaurant not found with name: " + name);
-                });
-        return toResponse(restaurant);
-    }
-
-    @Override
     public List<RestaurantResponse> getRestaurantsByLocation(String location) {
         return restaurantRepository.findByLocationContainingIgnoreCase(location).stream()
                 .map(this::toResponse)
@@ -104,6 +94,14 @@ public class RestaurantServiceImpl implements RestaurantService {
                 : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         return restaurantRepository.findAll(pageable).map(this::toResponse);
+    }
+
+    @Override
+    public List<RestaurantResponse> searchByName(String restaurantName) {
+        return restaurantRepository.findByRestaurantNameContainingIgnoreCase(restaurantName)
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 
     private Restaurant findById(Long id) {

@@ -13,7 +13,8 @@ public interface RestaurantService {
     RestaurantResponse getRestaurantById(Long id);
     RestaurantResponse updateRestaurant(Long id, RestaurantRequest request);
     void deleteRestaurant(Long id);
-    RestaurantResponse getRestaurantByName(String name);
+    List<RestaurantResponse> searchByName(String restaurantName);
+
     List<RestaurantResponse> getRestaurantsByLocation(String location);
     List<MenuItemResponse> getMenuItemsByRestaurant(Long restaurantId);
     Page<RestaurantResponse> getRestaurantsWithPaginationAndSorting(int page, int size, String sortBy, String direction);

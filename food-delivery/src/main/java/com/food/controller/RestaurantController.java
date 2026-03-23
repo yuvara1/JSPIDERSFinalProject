@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -56,10 +57,12 @@ public class RestaurantController {
     }
 
     @GetMapping("/search")
-    @Operation(summary = "Search restaurant by name", description = "Find restaurant using name (query parameter)")
-    public ResponseEntity<ApiResponse<RestaurantResponse>> getRestaurantByName(@RequestParam("name") String name) {
-        return ResponseEntity.ok(ApiResponse.success(restaurantService.getRestaurantByName(name), "Restaurant retrieved successfully"));
+    public ResponseEntity<List<RestaurantResponse>> searchRestaurantsByName(@RequestParam String restaurantName) {
+        log.info("Searching restaurants by name: {}", restaurantName);
+        List<RestaurantResponse> results = restaurantService.searchByName(restaurantName);
+        return ResponseEntity.ok(results);
     }
+
 
     @GetMapping("/location")
     @Operation(summary = "Filter restaurants by location", description = "Get all restaurants in a specific location")
